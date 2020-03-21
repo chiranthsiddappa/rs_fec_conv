@@ -2,6 +2,8 @@ import os
 import sys
 
 from setuptools import setup
+from setuptools.command.test import test as TestCommand
+from setuptools.command.sdist import sdist as SdistCommand
 
 from setuptools.command.install import install
 
