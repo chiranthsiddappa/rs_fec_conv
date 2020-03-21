@@ -123,7 +123,7 @@ class PostInstallCommand(install):
 
 setup_requires = ["setuptools-rust>=0.10.1", "wheel"]
 install_requires = []
-#tests_require = install_requires + ["pytest", "pytest-benchmark"]
+tests_require = install_requires + ["pytest", "pytest-benchmark"]
 
 setup(
     name="rs_fec_conv",
