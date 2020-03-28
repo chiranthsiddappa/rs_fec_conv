@@ -118,7 +118,7 @@ tests_require = install_requires + ["pytest", "pytest-benchmark"]
 
 setup(
     name="rs_fec_conv",
-    version="0.4.0",
+    version="0.4.4",
 	author="Benjamin Roepken",
 	author_email="broepken57@hotmail.com",
 	url="https://github.com/grayfox57/rs_fec_conv",
@@ -142,6 +142,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     #cmdclass={"install": PostInstallCommand, "bdist_wheel": bdist_wheel, "test": PyTest, "sdist": CargoModifiedSdist},
-	#cmdclass={"install": PostInstallCommand, "bdist_wheel": bdist_wheel},
-	cmdclass={"install": PostInstallCommand, "test": PyTest, "sdist": CargoModifiedSdist},
+	cmdclass={"install": PostInstallCommand, "bdist_wheel": bdist_wheel},
+	#cmdclass={"install": PostInstallCommand, "test": PyTest, "sdist": CargoModifiedSdist},
 )
