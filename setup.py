@@ -5,19 +5,6 @@ from setuptools import setup
 from setuptools.command.test import test as TestCommand
 from setuptools.command.sdist import sdist as SdistCommand
 
-try:
-    from setuptools_rust import RustExtension
-except ImportError:
-    import subprocess
-
-    errno = subprocess.call([sys.executable, "-m", "pip", "install", "setuptools-rust"])
-    if errno:
-        print("Please install setuptools-rust package")
-        raise SystemExit(errno)
-    else:
-        from setuptools_rust import RustExtension
-		
-
 from setuptools.command.install import install
 
 # Force the wheel to be platform specific
@@ -120,10 +107,14 @@ class PostInstallCommand(install):
 
         # subprocess.check_call(["pytest", "tests"])
 
+def make_rust_extensions():
+    from setuptools_rust import RustExtension
+    return [RustExtension("rs_fec_conv.rs_fec_conv", "Cargo.toml", debug=True)]
+
 
 setup_requires = ["setuptools-rust>=0.10.1", "wheel"]
 install_requires = []
-#tests_require = install_requires + ["pytest", "pytest-benchmark"]
+tests_require = install_requires + ["pytest", "pytest-benchmark"]
 
 setup(
     name="rs_fec_conv",
@@ -144,12 +135,13 @@ setup(
         "Operating System :: MacOS :: MacOS X",
     ],
     packages=["rs_fec_conv"],
-    rust_extensions=[RustExtension("rs_fec_conv.rs_fec_conv", "Cargo.toml", debug=True)],
+    rust_extensions=make_rust_extensions(),
     install_requires=install_requires,
     tests_require=tests_require,
     setup_requires=setup_requires,
     include_package_data=True,
     zip_safe=False,
     #cmdclass={"install": PostInstallCommand, "bdist_wheel": bdist_wheel, "test": PyTest, "sdist": CargoModifiedSdist},
-	cmdclass={"install": PostInstallCommand, "bdist_wheel": bdist_wheel},
+	#cmdclass={"install": PostInstallCommand, "bdist_wheel": bdist_wheel},
+	cmdclass={"install": PostInstallCommand, "test": PyTest, "sdist": CargoModifiedSdist},
 )
