@@ -108,8 +108,11 @@ class PostInstallCommand(install):
         # subprocess.check_call(["pytest", "tests"])
 
 def make_rust_extensions():
-    from setuptools_rust import RustExtension
-    return [RustExtension("rs_fec_conv.rs_fec_conv", "Cargo.toml", debug=True)]
+    try:
+        from setuptools_rust import RustExtension
+        return [RustExtension("rs_fec_conv.rs_fec_conv", "Cargo.toml", debug=True)]
+    except ImportError as ie:
+        pass
 
 
 setup_requires = ["setuptools-rust>=0.10.1", "wheel"]
